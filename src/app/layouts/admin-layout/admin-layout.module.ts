@@ -17,6 +17,8 @@ import HttpService from 'src/app/services/user-service/user-service';
 import { StoresComponent } from 'src/app/pages/stores/stores.component';
 import { CategoriesComponent } from 'src/app/pages/categories/categories.component';
 import { ProductsComponent } from 'src/app/pages/products/products.component';
+import { ToasterComponent } from 'src/app/components/toaster/toaster.component';
+import { ToastComponent } from 'src/app/components/toast/toast.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -26,9 +28,12 @@ import { ProductsComponent } from 'src/app/pages/products/products.component';
     FormsModule,
     HttpClientModule,
     NgbModule,
-    ClipboardModule
+    ClipboardModule,
+    CommonModule,
   ],
   declarations: [
+    ToastComponent,
+    ToasterComponent,
     DashboardComponent,
     UserProfileComponent,
     TablesComponent,

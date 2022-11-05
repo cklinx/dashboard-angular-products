@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { Store, WrapperData } from 'src/app/models/user-service.types';
 import HttpService from 'src/app/services/user-service/user-service';
-import { Store, WrapperData } from 'src/app/services/user-service/user-service.types';
 
 @Component({
   selector: 'app-stores',

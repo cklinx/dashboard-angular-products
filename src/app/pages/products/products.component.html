@@ -61,7 +61,7 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" (click)="open(content)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">Delete</a>
+                      <a class="dropdown-item" (click)="open(content, product)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">Delete</a>
                       <a class="dropdown-item" href="javascript:void(0)">Another action</a>
                       <a class="dropdown-item" href="javascript:void(0)">Something else here</a>
                     </div>
@@ -77,22 +77,48 @@
     </div>
   </div>
 
+  <!-- <div class="alert alert-success" role="alert">
+    <svg id="info-fill" fill="currentColor" viewBox="0 0 16 16" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Success:">
+      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+    </svg>
+    Operation success.
+  </div>
+  <div class="alert alert-danger" role="alert">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    </svg>
+    Error. Try again later.
+  </div> -->
+  <!-- <ngb-alert [dismissible]="false" type='success'>
+    <svg id="info-fill" fill="currentColor" viewBox="0 0 16 16" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Success:">
+      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+    </svg>
+    <strong class="pl-3">Operation success.</strong>
+  </ngb-alert>
+  <ngb-alert [dismissible]="false" type='danger'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    </svg>
+    <strong class="pl-3">Error. Try again later.</strong>
+  </ngb-alert> -->
+
 </div>
 
-<!-- <ng-template #content let-modal>
+<ng-template #content let-modal>
 	<div class="modal-header">
-    <h4 class="modal-title" id="modal-title">Profile deletion</h4>
+    <h4 class="modal-title" id="modal-title">Product deletion</h4>
     <button
+      #closebutton
       type="button"
       class="btn-close"
       aria-describedby="modal-title"
-      aria-label="Close"
+      data-dismiss="modal"
       (click)="modal.dismiss('Cross click')"
     ></button>
   </div>
   <div class="modal-body">
     <p>
-      <strong>Are you sure you want to delete <span class="text-primary">"John Doe"</span> profile?</strong>
+      <strong>Are you sure you want to delete <span class="text-primary">"{{selectedProduct.data.title}}"</span> product?</strong>
     </p>
     <p>
       All information associated to this user profile will be permanently deleted.
@@ -101,9 +127,13 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-    <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+    <!-- <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button> -->
+    <button #closebutton type="button" class="btn btn-danger" (click)="deleteProduct('Ok click', selectedProduct)">Ok</button>
   </div>
 </ng-template>
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+<!-- Toaster -->
+<app-toaster></app-toaster>
+
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
 

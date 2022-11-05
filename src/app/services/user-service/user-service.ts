@@ -1,4 +1,4 @@
-import { Product, StatsCategories, Store, WrapperData } from './user-service.types';
+import { Product, StatsCategories, Store, WrapperData } from '../../models/user-service.types';
 import { ApiUrls } from '../api/api.constants';
 
 import { Injectable } from '@angular/core';
@@ -62,7 +62,7 @@ export default class HttpService {
     );
 
   deleteProduct = (idProduct: string) =>
-    this.http.get<Product>(
+    this.http.delete<Product>(
       ApiUrls.DELETE_PRODUCT(idProduct),
     ).pipe(
       catchError(this.handleError('deleteProduct', []))
