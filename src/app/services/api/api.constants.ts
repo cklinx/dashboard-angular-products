@@ -8,20 +8,21 @@
 //     return `repos/${owner}/${repository}/stargazers`;
 //   },
 // };
-export const idStore = 'ijpxNJLM732vm8AeajMR';
+const apiUrl = 'http://us-central1-test-b7665.cloudfunctions.net/api';
+const idStore = 'ijpxNJLM732vm8AeajMR';
 
 export const ApiUrls = {
-  GET_STORES: `/stores`,
-  GET_STORE: `/stores/${idStore}`,
-  GET_PRODUCTS: `​/stores​/${idStore}​/products`,
-  SET_PRODUCTS: `/stores/${idStore}/products`,
+  GET_STORES: `${apiUrl}/stores`,
+  GET_STORE: `${apiUrl}/stores/${idStore}`,
+  GET_PRODUCTS: `${apiUrl}/stores/${idStore}/products`,
+  SET_PRODUCT: `${apiUrl}/stores/${idStore}/products`,
   // GET_PRODUCT: '/stores/{idStore}/products/{idProduct}',
   GET_PRODUCT: (idProduct: string) => {
-    return `/stores/${idStore}/products/${idProduct}`;
+    return `${apiUrl}/stores/${idStore}/products/${idProduct}`;
   },
   // DELETE_PRODUCT: '/stores/{idStore}/products/{idProduct}',
   DELETE_PRODUCT: (idProduct: string) => {
-    return `/stores/${idStore}/products/${idProduct}`;
+    return `${apiUrl}/stores/${idStore}/products/${idProduct}`;
   },
-  GET_STAT_CATEGORIES: `/stores/${idStore}/stats/categories`
+  GET_STAT_CATEGORIES: `${apiUrl}/stores/${idStore}/stats/categories`
 }

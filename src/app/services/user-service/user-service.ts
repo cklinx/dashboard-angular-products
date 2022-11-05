@@ -1,54 +1,77 @@
-
-// import {ApiUrls, UrlTemplates} from '@stargazers/services/api/api.constants';
-import { Product, StatsCategories, Store } from './user-service.types';
-// import {
-//   RepositoriesRawResponse,
-//   StargazersRawResponse,
-//   UsersSearchRawResponse,
-// } from './user-service.types';
-// import Formatter from '@stargazers/utils/formatter';
-import { HttpClient } from '../http-client';
-// import { Formatter } from '../utils';
+import { Product, StatsCategories, Store, WrapperData } from './user-service.types';
 import { ApiUrls } from '../api/api.constants';
 
-export const getStores = () =>
-  HttpClient.get<Store[]>(
-    ApiUrls.GET_STORES
-  );
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HandleError, HttpErrorHandler } from '../http-error-handler.service';
+import { catchError } from 'rxjs/operators';
 
-export const getStore = () =>
-  HttpClient.get<Store>(
-    ApiUrls.GET_STORE,
-  );
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+  })
+};
 
-export const getProducts = () =>
-  HttpClient.get<Product[]>(
-    ApiUrls.GET_PRODUCTS,
-  );
+@Injectable()
+export default class HttpService {
 
-export const setProducts = () =>
-  HttpClient.get<Product[]>(
-    ApiUrls.SET_PRODUCTS,
-  );
+  private handleError: HandleError;
+  
+  constructor(
+    private http: HttpClient,
+    httpErrorHandler: HttpErrorHandler
+  ) {
+    this.handleError = httpErrorHandler.createHandleError('HttpService');
+  }
 
-export const getProduct = (idProduct: string) =>
-  HttpClient.get<Product>(
-    ApiUrls.GET_PRODUCT(idProduct),
-  );
+  getStores = () =>
+    this.http.get<WrapperData<Store>>(
+      ApiUrls.GET_STORES
+    ).pipe(
+      catchError(this.handleError('getStores', []))
+    );
 
-export const deleteProduct = (idProduct: string) =>
-  HttpClient.get<Product>(
-    ApiUrls.DELETE_PRODUCT(idProduct),
-  );
+  getStore = () =>
+    this.http.get<Store>(
+      ApiUrls.GET_STORE,
+    ).pipe(
+      catchError(this.handleError('getStore', []))
+    );
 
-export const getStatCategories = () =>
-  HttpClient.get<StatsCategories[]>(
-    ApiUrls.GET_STAT_CATEGORIES,
-  );
-// export const getUserRepositories = (owner: string) =>
-//   HttpClient.get<RepositoriesRawResponse>(
-//     Formatter.injectUrlParam(UrlTemplates.GET_USER_REPOSITORIES, owner),
-//   );
+  getProducts = () =>
+    this.http.get<Product[]>(
+      ApiUrls.GET_PRODUCTS,
+    ).pipe(
+      catchError(this.handleError('getProducts', []))
+    );
 
-// export const getStargazers = (owner: string, repository: string) =>
-//   HttpClient.get<StargazersRawResponse>(ApiUrls.GET_REPO_STARGAZERS(owner, repository));
+  setProduct = (product: Product) =>
+    this.http.post<Product>(
+      ApiUrls.SET_PRODUCT,
+      product,
+      httpOptions
+    ).pipe(
+      catchError(this.handleError('setProduct', []))
+    );
+
+  getProduct = (idProduct: string) =>
+    this.http.get<Product>(
+      ApiUrls.GET_PRODUCT(idProduct),
+    ).pipe(
+      catchError(this.handleError('getProduct', []))
+    );
+
+  deleteProduct = (idProduct: string) =>
+    this.http.get<Product>(
+      ApiUrls.DELETE_PRODUCT(idProduct),
+    ).pipe(
+      catchError(this.handleError('deleteProduct', []))
+    );
+
+  getStatCategories = () =>
+    this.http.get<WrapperData<StatsCategories>[]>(
+      ApiUrls.GET_STAT_CATEGORIES,
+    ).pipe(
+      catchError(this.handleError('getStatCategories', []))
+    );
+}

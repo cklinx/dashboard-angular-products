@@ -17,3 +17,8 @@ export interface StatsCategories {
   numberOfProducts:	number;
   category:	string;
 }
+
+export interface WrapperData<T> {
+  id:	string;
+  data:	T[];
+}
