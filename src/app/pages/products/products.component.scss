@@ -42,3 +42,15 @@
 //     border-radius: .375rem;
 //     opacity: .5;
 //   }
+
+.search-results {
+    height: 55vh;
+    overflow: scroll;
+}
+
+.required-asterisk{
+    color: red;
+    font-weight: bold;
+    margin-left: 3px;
+    font-size: 1.2em;
+}

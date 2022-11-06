@@ -1,10 +1,10 @@
-import { Product, StatsCategories, Store, WrapperData } from '../../models/user-service.types';
 import { ApiUrls } from '../api/api.constants';
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HandleError, HttpErrorHandler } from '../http-error-handler.service';
 import { catchError } from 'rxjs/operators';
+import { Product, StatsCategories, Store, WrapperData, WrapperDataList } from 'src/app/models/user-service.types';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -38,15 +38,22 @@ export default class HttpService {
       catchError(this.handleError('getStore', []))
     );
 
-  getProducts = () =>
-    this.http.get<Product[]>(
-      ApiUrls.GET_PRODUCTS,
+  getProducts = (page: number) =>
+    this.http.get<WrapperData<Product>[]>(
+      ApiUrls.GET_PRODUCTS(page),
+    ).pipe(
+      catchError(this.handleError('getProducts', []))
+    );
+
+  getProductsPaged = (page: number) =>
+    this.http.get<WrapperDataList<WrapperData<Product>>>(
+      ApiUrls.GET_PRODUCTS(page),
     ).pipe(
       catchError(this.handleError('getProducts', []))
     );
 
   setProduct = (product: Product) =>
-    this.http.post<Product>(
+    this.http.post<string>(
       ApiUrls.SET_PRODUCT,
       product,
       httpOptions

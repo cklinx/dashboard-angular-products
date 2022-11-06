@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ClipboardModule } from 'ngx-clipboard';
 
@@ -19,6 +19,7 @@ import { CategoriesComponent } from 'src/app/pages/categories/categories.compone
 import { ProductsComponent } from 'src/app/pages/products/products.component';
 import { ToasterComponent } from 'src/app/components/toaster/toaster.component';
 import { ToastComponent } from 'src/app/components/toast/toast.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -30,6 +31,8 @@ import { ToastComponent } from 'src/app/components/toast/toast.component';
     NgbModule,
     ClipboardModule,
     CommonModule,
+    InfiniteScrollModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ToastComponent,

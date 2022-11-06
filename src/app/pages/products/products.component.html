@@ -9,10 +9,30 @@
   <div class="row">
     <div class="col">
       <div class="card shadow">
+
         <div class="card-header border-0">
-          <h3 class="mb-0">Products</h3>
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="mb-0">Products</h3>
+            </div>
+            <div class="col text-right">
+              <a href="javascript:void(0)" (click)="open(content, 'new', null)" class="btn btn-sm btn-primary">Add product</a>
+            </div>
+          </div>
         </div>
-        <div style="min-height: 50vh;" class="table-responsive">
+        
+
+        <div class="table-responsive"
+          class="search-results"
+          infiniteScroll
+          [infiniteScrollDistance]="2"
+          [infiniteScrollThrottle]="50"
+          [infiniteScrollDistance]="2"
+          (scrolled)="onScrollDown()"
+          (scrolledUp)="onScrollUp()"
+          [scrollWindow]="false"
+        >
+
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
@@ -21,119 +41,201 @@
                 <th scope="col">Price</th>
                 <th scope="col">Employees</th>
                 <th scope="col">Description</th>
-                <th scope="col">Reviews</th>
+                <th scope="col"># Reviews</th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let product of products; let i = index">
-                <th scope="row">
-                  <div class="media align-items-center">
-                    <!-- <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
-                      <img alt="Image placeholder" src="../assets/img/theme/store.png">
-                    </a> -->
-                    <div class="media-body">
-                      <span class="mb-0 text-sm">{{product.data.title}}</span>
+              <ng-template [ngIf]="products.length>0">
+                <tr *ngFor="let product of products; let i = index;">
+                  <th scope="row">
+                    <div class="media align-items-center">
+                      <div class="media-body">
+                        <span class="mb-0 text-sm">{{product.data.title}}</span>
+                      </div>
                     </div>
-                  </div>
-                </th>
-                <td>
-                  {{product.data.category}}
-                </td>
-                <td>
-                  {{product.data.price}}
-                  <!-- <span class="badge badge-dot mr-4">
-                    <i class="bg-warning"></i> {{product.data.employees}}
-                  </span> -->
-                </td>
-                <td>
-                  {{product.data.employee}}
-                </td>
-                <td>
-                  {{product.data.description}}
-                </td>
-                <td>
-                  {{product.data.reviews}}
-                </td>
-                <td class="text-right">
-                  <div ngbDropdown placement="bottom-right">
-                    <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </a>
-                    <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" (click)="open(content, product)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">Delete</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Another action</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Something else here</a>
+                  </th>
+                  <td>
+                    {{product.data.category}}
+                  </td>
+                  <td>
+                    {{product.data.price}}
+                  </td>
+                  <td>
+                    {{product.data.employee}}
+                  </td>
+                  <td>
+                    {{product.data.description}}
+                  </td>
+                  <td>
+                    {{product.data.reviews?.length}}
+                  </td>
+                  <td class="text-right">
+                    <div ngbDropdown placement="bottom-right">
+                      <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                        <i class="fas fa-ellipsis-v"></i>
+                      </a>
+                      <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                        <a class="dropdown-item" (click)="open(content, 'delete', product)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">Delete</a>
+                        <a class="dropdown-item" (click)="open(content, 'view', product)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">Details</a>
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
-              
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template [ngIf]="products.length<=0 && !isLoading">
+                <tr>
+                  <td colspan="7">No results found</td>
+                </tr>
+              </ng-template>
+              <ng-template [ngIf]="products.length<=0 && isLoading">
+                <tr>
+                  <td colspan="7">Loading...
+                </tr>
+              </ng-template>
             </tbody>
           </table>
+          
+        </div>
+
+        
+        <div class="card-footer py-4">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-end mb-0">
+              <li class="page-item active">
+                Total products {{totProducts}}
+              </li>
+            </ul>
+          </nav>
         </div>
         
       </div>
     </div>
   </div>
-
-  <!-- <div class="alert alert-success" role="alert">
-    <svg id="info-fill" fill="currentColor" viewBox="0 0 16 16" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Success:">
-      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-    </svg>
-    Operation success.
-  </div>
-  <div class="alert alert-danger" role="alert">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
-      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-    </svg>
-    Error. Try again later.
-  </div> -->
-  <!-- <ngb-alert [dismissible]="false" type='success'>
-    <svg id="info-fill" fill="currentColor" viewBox="0 0 16 16" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Success:">
-      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-    </svg>
-    <strong class="pl-3">Operation success.</strong>
-  </ngb-alert>
-  <ngb-alert [dismissible]="false" type='danger'>
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
-      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-    </svg>
-    <strong class="pl-3">Error. Try again later.</strong>
-  </ngb-alert> -->
-
 </div>
 
 <ng-template #content let-modal>
-	<div class="modal-header">
-    <h4 class="modal-title" id="modal-title">Product deletion</h4>
-    <button
-      #closebutton
-      type="button"
-      class="btn-close"
-      aria-describedby="modal-title"
-      data-dismiss="modal"
-      (click)="modal.dismiss('Cross click')"
-    ></button>
-  </div>
-  <div class="modal-body">
-    <p>
-      <strong>Are you sure you want to delete <span class="text-primary">"{{selectedProduct.data.title}}"</span> product?</strong>
-    </p>
-    <p>
-      All information associated to this user profile will be permanently deleted.
-      <span class="text-danger">This operation can not be undone.</span>
-    </p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-    <!-- <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button> -->
-    <button #closebutton type="button" class="btn btn-danger" (click)="deleteProduct('Ok click', selectedProduct)">Ok</button>
-  </div>
+  <ng-template [ngIf]="mode=='delete'" [ngIfElse]="elseBlockDialog">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">Delete product</h4>
+      <button
+        #closebutton
+        type="button"
+        class="btn-close"
+        aria-describedby="modal-title"
+        data-dismiss="modal"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <p>
+        <strong>Are you sure you want to delete <span class="text-primary">"{{selectedProduct.data.title}}"</span> product?</strong>
+      </p>
+      <p>
+        All information associated to this user profile will be permanently deleted.
+        <span class="text-danger">This operation can not be undone.</span>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+      <!-- <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button> -->
+      <button #closebutton type="button" class="btn btn-danger" (click)="deleteProduct('Ok click', selectedProduct)">Ok</button>
+    </div>
+  </ng-template>
+	
+  <ng-template #elseBlockDialog>
+    <div class="pt-3 pb-3 col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <h3 class="mb-0">Product</h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="formGroup">
+            <h6 class="heading-small text-muted mb-4">Product information</h6>
+            <div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-title">Title<span class="required-asterisk">*</span></label>
+                    <input formControlName="title" ng-required="hasTrailer" type="text" id="input-title" class="form-control form-control-alternative" placeholder="Title">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-category">Category<span class="required-asterisk">*</span></label>
+                    <input type="text" formControlName="category" id="input-category" class="form-control form-control-alternative" placeholder="Category">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-price">Price<span class="required-asterisk">*</span></label>
+                    <input type="number" formControlName="price" id="input-price" class="form-control form-control-alternative" placeholder="Price">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-employee">Employee</label>
+                    <input type="text" formControlName="employee" id="input-employee" class="form-control form-control-alternative" placeholder="Employee">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-description">Price</label>
+                    <textarea formControlName="description" id="input-description" rows="4" class="form-control form-control-alternative" placeholder="A few words about product ..."></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h6 class="heading-small text-muted mb-4">Reviews Manager</h6>
+            <div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-review">Add review</label>
+                    <textarea id="input-review" #reviewInput rows="4" class="form-control form-control-alternative" placeholder="Reviews"></textarea>
+                  </div>
+                  <div class="col text-right pb-3">
+                    <a href="javascript:void(0)" (click)="addReview(reviewInput.value)" class="btn btn-sm btn-primary">Add review</a>
+                  </div>
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr >
+                        <th scope="col">Other reviews</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                      <ng-template #elseBlockRiviews>
+                        <tr>
+                          <td colspan="2">No results found</td>
+                        </tr>
+                      </ng-template>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+        <!-- <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button> -->
+        <button type="button" class="btn btn-primary" (click)="saveProduct('Ok click')">Save</button>
+      </div>
+    </div>
+  </ng-template>
+
 </ng-template>
 
 <!-- Toaster -->
 <app-toaster></app-toaster>
-
-<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
-

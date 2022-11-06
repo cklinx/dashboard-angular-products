@@ -1,3 +1,5 @@
+import { FormControl } from "@angular/forms";
+
 export interface Product {
   title: string;
   category:	string;
@@ -20,5 +22,26 @@ export interface StatsCategories {
 
 export interface WrapperData<T> {
   id:	string;
-  data:	T[];
+  data:	T;
+}
+
+export interface WrapperDataList<T> {
+  list: T[];
+  length: number;
+}
+
+export enum ModeDialog {
+  Edit = 'edit',
+  New = 'new',
+  Delete = 'delete',
+  View = 'view'
+}
+
+export interface ProductForm {
+  title:	FormControl<string>;
+  category:	FormControl<string>;
+  price:	FormControl<number>;
+  employee:	FormControl<string>;
+  description: FormControl<string>;
+  reviews: FormControl<string[]>;
 }
