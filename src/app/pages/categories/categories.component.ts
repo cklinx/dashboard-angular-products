@@ -25,12 +25,6 @@ export class CategoriesComponent implements OnInit {
   ngOnInit() {    
     this.getStatCategories();
 
-    this.datasets = [
-      [0, 20, 10, 30, 15, 40, 20, 60, 60],
-      [0, 20, 5, 25, 10, 30, 15, 40, 40]
-    ];
-    this.data = this.datasets[0];
-
     parseOptions(Chart, chartOptions());
       
   }
@@ -75,28 +69,31 @@ export class CategoriesComponent implements OnInit {
   }
 
   getData(statsCategories: StatsCategories[]){
+    let backgroundColor: string[] = [];
     let data: number[] = [];
     let labels: string[] = [];
     statsCategories.map(el =>{
       data.push(el.numberOfProducts);
-      labels.push(el.category)
+      labels.push(el.category);
+      backgroundColor.push(this.dynamicColors());
     })
     const confData = {
       labels,
       datasets: [{
         label: 'Category Dataset',
         data,
-        backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(75, 192, 192)',
-          'rgb(255, 205, 86)',
-          'rgb(201, 203, 207)',
-          'rgb(54, 162, 235)'
-        ],
+        backgroundColor,
         borderWidth: 1
       }]
     };
     return confData;
-  } 
+  }
+
+  dynamicColors(): string {
+    var r = Math.floor(Math.random() * 255);
+    var g = Math.floor(Math.random() * 255);
+    var b = Math.floor(Math.random() * 255);
+    return "rgb(" + r + "," + g + "," + b + ")";
+ };
 
 }
