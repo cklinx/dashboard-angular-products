@@ -51,21 +51,21 @@
                   <th scope="row">
                     <div class="media align-items-center">
                       <div class="media-body">
-                        <span class="mb-0 text-sm">{{product.data.title}}</span>
+                        <span class="mb-0 text-sm">{{product.data.title | slice:0:20}}</span>
                       </div>
                     </div>
                   </th>
                   <td>
-                    {{product.data.category}}
+                    {{product.data.category | slice:0:20}}
                   </td>
                   <td>
                     {{product.data.price}}
                   </td>
                   <td>
-                    {{product.data.employee}}
+                    {{product.data.employee | slice:0:20}}
                   </td>
                   <td>
-                    {{product.data.description}}
+                    {{product.data.description | slice:0:20}}
                   </td>
                   <td>
                     {{product.data.reviews?.length}}
@@ -186,7 +186,7 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-description">Price</label>
+                    <label class="form-control-label" for="input-description">Description</label>
                     <textarea formControlName="description" id="input-description" rows="4" class="form-control form-control-alternative" placeholder="A few words about product ..."></textarea>
                   </div>
                 </div>
@@ -216,7 +216,7 @@
                     <tbody>
                       <ng-template [ngIf]="formGroup.value.reviews.length>0" [ngIfElse]="elseBlockRiviews">
                         <tr *ngFor="let review of formGroup.value.reviews; let i = index;">
-                          <td>{{review}}</td>
+                          <td><p class="wrapbox auto">{{review}}</p></td>
                           <td class="text-right" *ngIf="this.mode=='new'">
                             <div ngbDropdown placement="bottom-right">
                               <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>

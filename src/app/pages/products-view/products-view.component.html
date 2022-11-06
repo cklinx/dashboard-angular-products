@@ -1,0 +1,162 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <h1 class="display-2 text-white">Products View</h1>
+        <p class="text-white mt-0 mb-5">You can also switch layout/grid layout</p>
+        <a href="javascript:void(0)" (click)="swithBreakpoint()" class="btn btn-info">Change Layout</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div
+    class="search-results"
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="50"
+    [infiniteScrollDistance]="2"
+    (scrolled)="onScrollDown()"
+    (scrolledUp)="onScrollUp()"
+    [scrollWindow]="true"
+  >
+    <div class="row mb-5 ">
+      <div class="order-xl-2 mb-5" [ngClass]="{'col-xl-4 col-md-6': isGridLayout, 'col-12': !isGridLayout}" *ngFor="let product of products; let i = index;">
+        <div class="card card-profile shadow">
+          <div class="row justify-content-center">
+            <div class="col-lg-3 order-lg-2">
+              <div class="card-profile-image">
+                <a href="javascript:void(0)">
+                  <img src="assets/img/theme/angular.jpg" class="rounded-circle">
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+            <div class="d-flex justify-content-between">
+              <a href="javascript:void(0)" class="btn btn-sm btn-info mr-4">Connect</a>
+              <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">Message</a>
+            </div>
+          </div> -->
+          <div class="card-body ">
+            <div class="row pt-5">
+              <div class="col">
+                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                  <div>
+                    <span class="heading">{{product.data.price}} €</span>
+                    <span class="description">Price</span>
+                  </div>
+                  <div>
+                    <span class="heading">{{product.data.reviews ?  product.data.reviews.length : 0}}</span>
+                    <span class="description">Reviews</span>
+                  </div>
+                  <!-- <div>
+                    <span class="heading">89</span>
+                    <span class="description">Comments</span>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <h1>
+                {{isGridLayout ? (product.data.title | slice:0:15) : product.data.title}}
+              </h1>
+              <div class="h5 font-weight-300">
+                <i class="ni location_pin mr-2"></i>{{isGridLayout ? (product.data.category | slice:0:15) : product.data.category}}
+              </div>
+              <div class="h5 mt-4">
+                <i class="ni business_briefcase-24 mr-2"></i>Employee
+              </div>
+              <div>
+                <i class="ni education_hat mr-2"></i>{{isGridLayout ? (product.data.employee | slice:0:15) : product.data.employee}}&nbsp;
+              </div>
+              <hr class="my-4" />
+              <p>{{isGridLayout ? (product.data.description | slice:0:15) : product.data.description}}&nbsp;</p>
+              <a href="javascript:void(0)" (click)="open(content, 'view', product)">Show more reviews</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+<ng-template #content let-modal>
+	
+  <ng-template [ngIf]="mode=='view'">
+    <div class="pt-3 pb-3 col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <h3 class="mb-0">Product</h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="formGroup">
+            <h6 class="heading-small text-muted mb-4">Product information</h6>
+            <div>
+              <div class="row">
+                <div class="col-md-12">
+                  <ng-container *ngIf="this.mode=='new'">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-review">Add review</label>
+                      <textarea id="input-review" #reviewInput rows="4" class="form-control form-control-alternative" placeholder="Reviews" value=""></textarea>
+                    </div>
+                    <div class="col text-right pb-3">
+                      <a href="javascript:void(0)" (click)="addReview(reviewInput.value)" class="btn btn-sm btn-primary">Add review</a>
+                    </div>
+                  </ng-container>
+                  
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr >
+                        <th scope="col">Other reviews</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-template [ngIf]="formGroup.value.reviews.length>0" [ngIfElse]="elseBlockRiviews">
+                        <tr *ngFor="let review of formGroup.value.reviews; let i = index;">
+                          <td><p class="wrapbox auto">{{review}}</p></td>
+                          <td class="text-right" *ngIf="this.mode=='new'">
+                            <div ngbDropdown placement="bottom-right">
+                              <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                              <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" (click)="deleteReview(i)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">Delete</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-template>
+                      
+                      <ng-template #elseBlockRiviews>
+                        <tr>
+                          <td colspan="2">No results found</td>
+                        </tr>
+                      </ng-template>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+        <!-- <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button> -->
+        <button *ngIf="this.mode=='new'" type="button" class="btn btn-primary" (click)="saveProduct('Ok click')">Save</button>
+      </div>
+    </div>
+  </ng-template>
+
+</ng-template>

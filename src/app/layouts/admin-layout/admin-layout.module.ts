@@ -18,6 +18,7 @@ import { ProductsComponent } from 'src/app/pages/products/products.component';
 import { ToasterComponent } from 'src/app/components/toaster/toaster.component';
 import { ToastComponent } from 'src/app/components/toast/toast.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ProductsViewComponent } from 'src/app/pages/products-view/products-view.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     IconsComponent,
     StoresComponent,
     CategoriesComponent,
-    ProductsComponent
+    ProductsComponent,
+    ProductsViewComponent
   ],
   providers: [
     HttpErrorHandler,

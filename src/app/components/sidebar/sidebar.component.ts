@@ -12,9 +12,10 @@ export const ROUTES: RouteInfo[] = [
     { path: '/icons', title: 'Icons',  icon:'ni-planet text-blue', class: '' },
     { path: '/user-profile', title: 'User profile',  icon:'ni-single-02 text-yellow', class: '' },
     { path: '/tables', title: 'Tables',  icon:'ni-bullet-list-67 text-red', class: '' },
-    { path: '/stores', title: 'Stores',  icon:'ni-shop text-primary', class: '' },
-    { path: '/categories', title: 'Categories',  icon:'ni-archive-2 text-red', class: '' },
-    { path: '/products', title: 'Products',  icon:'ni-bullet-list-67 text-info', class: '' }
+    { path: '/stores', title: 'Stores',  icon:'ni-shop text-blue', class: '' },
+    { path: '/categories', title: 'Categories',  icon:'ni-chart-pie-35 text-blue', class: '' },
+    { path: '/products', title: 'Manage products',  icon:'ni-bullet-list-67 text-yellow', class: '' },
+    { path: '/products-view', title: 'View products',  icon:'ni-archive-2 text-red', class: '' }
     
 ];
 
