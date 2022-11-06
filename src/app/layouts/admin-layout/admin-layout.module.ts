@@ -4,10 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClipboardModule } from 'ngx-clipboard';
 import { AdminLayoutRoutes } from './admin-layout.routing';
-import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
-import { IconsComponent } from '../../pages/icons/icons.component';
-import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
-import { TablesComponent } from '../../pages/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpErrorHandler } from 'src/app/services/http-error-handler.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -35,10 +31,6 @@ import { ProductsViewComponent } from 'src/app/pages/products-view/products-view
   declarations: [
     ToastComponent,
     ToasterComponent,
-    DashboardComponent,
-    UserProfileComponent,
-    TablesComponent,
-    IconsComponent,
     StoresComponent,
     CategoriesComponent,
     ProductsComponent,
