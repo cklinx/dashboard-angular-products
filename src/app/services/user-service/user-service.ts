@@ -9,7 +9,8 @@ import { Product, StatsCategories, Store, WrapperData, WrapperDataList } from 's
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
-  })
+    
+  }),
 };
 
 @Injectable()
@@ -56,7 +57,8 @@ export default class HttpService {
     this.http.post<string>(
       ApiUrls.SET_PRODUCT,
       product,
-      httpOptions
+      // httpOptions
+      { ...httpOptions, responseType: 'text' as any} 
     ).pipe(
       catchError(this.handleError('setProduct', []))
     );

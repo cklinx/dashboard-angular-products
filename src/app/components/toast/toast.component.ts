@@ -47,7 +47,6 @@ export class ToastComponent implements OnInit {
       .subscribe(() => this.hide());
 
     this.toast.show();
-    console.log('aaaaaaaaaaaaaaa');
     
   }
 

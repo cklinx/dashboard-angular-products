@@ -94,11 +94,9 @@
                 </tr>
               </ng-template>
             </tbody>
-          </table>
-          
+          </table> 
         </div>
-
-        
+              
         <div class="card-footer py-4">
           <nav aria-label="...">
             <ul class="pagination justify-content-end mb-0">
@@ -198,13 +196,16 @@
             <div>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-review">Add review</label>
-                    <textarea id="input-review" #reviewInput rows="4" class="form-control form-control-alternative" placeholder="Reviews"></textarea>
-                  </div>
-                  <div class="col text-right pb-3">
-                    <a href="javascript:void(0)" (click)="addReview(reviewInput.value)" class="btn btn-sm btn-primary">Add review</a>
-                  </div>
+                  <ng-container *ngIf="this.mode=='new'">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-review">Add review</label>
+                      <textarea id="input-review" #reviewInput rows="4" class="form-control form-control-alternative" placeholder="Reviews" value=""></textarea>
+                    </div>
+                    <div class="col text-right pb-3">
+                      <a href="javascript:void(0)" (click)="addReview(reviewInput.value)" class="btn btn-sm btn-primary">Add review</a>
+                    </div>
+                  </ng-container>
+                  
                   <table class="table align-items-center table-flush">
                     <thead class="thead-light">
                       <tr >
@@ -213,6 +214,21 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <ng-template [ngIf]="formGroup.value.reviews.length>0" [ngIfElse]="elseBlockRiviews">
+                        <tr *ngFor="let review of formGroup.value.reviews; let i = index;">
+                          <td>{{review}}</td>
+                          <td class="text-right" *ngIf="this.mode=='new'">
+                            <div ngbDropdown placement="bottom-right">
+                              <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                              <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" (click)="deleteReview(i)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">Delete</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-template>
                       
                       <ng-template #elseBlockRiviews>
                         <tr>
@@ -230,7 +246,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
         <!-- <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button> -->
-        <button type="button" class="btn btn-primary" (click)="saveProduct('Ok click')">Save</button>
+        <button *ngIf="this.mode=='new'" type="button" class="btn btn-primary" (click)="saveProduct('Ok click')">Save</button>
       </div>
     </div>
   </ng-template>
