@@ -21,7 +21,6 @@
           </div>
         </div>
         
-
         <div class="table-responsive"
           class="search-results"
           infiniteScroll
@@ -48,39 +47,41 @@
             <tbody>
               <ng-template [ngIf]="products.length>0">
                 <tr *ngFor="let product of products; let i = index;">
-                  <th scope="row">
-                    <div class="media align-items-center">
-                      <div class="media-body">
-                        <span class="mb-0 text-sm">{{product.data.title | slice:0:20}}</span>
+                  <ng-template [ngIf]="product">
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{product.data.title | slice:0:20}}</span>
+                        </div>
                       </div>
-                    </div>
-                  </th>
-                  <td>
-                    {{product.data.category | slice:0:20}}
-                  </td>
-                  <td>
-                    {{product.data.price}}
-                  </td>
-                  <td>
-                    {{product.data.employee | slice:0:20}}
-                  </td>
-                  <td>
-                    {{product.data.description | slice:0:20}}
-                  </td>
-                  <td>
-                    {{product.data.reviews?.length}}
-                  </td>
-                  <td class="text-right">
-                    <div ngbDropdown placement="bottom-right">
-                      <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
-                        <i class="fas fa-ellipsis-v"></i>
-                      </a>
-                      <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" (click)="open(content, 'delete', product)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">Delete</a>
-                        <a class="dropdown-item" (click)="open(content, 'view', product)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">Details</a>
+                    </th>
+                    <td>
+                      {{product.data.category | slice:0:20}}
+                    </td>
+                    <td>
+                      {{product.data.price}}
+                    </td>
+                    <td>
+                      {{product.data.employee | slice:0:20}}
+                    </td>
+                    <td>
+                      {{product.data.description | slice:0:20}}
+                    </td>
+                    <td>
+                      {{product.data.reviews?.length}}
+                    </td>
+                    <td class="text-right">
+                      <div ngbDropdown placement="bottom-right">
+                        <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                          <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                          <a class="dropdown-item" (click)="open(content, 'delete', product)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">Delete</a>
+                          <a class="dropdown-item" (click)="open(content, 'view', product)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal">Details</a>
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
+                  </ng-template>
                 </tr>
               </ng-template>
               <ng-template [ngIf]="products.length<=0 && !isLoading">
@@ -245,8 +246,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-        <!-- <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button> -->
-        <button *ngIf="this.mode=='new'" type="button" class="btn btn-primary" (click)="saveProduct('Ok click')">Save</button>
+        <button *ngIf="(formGroup.valid && formGroup.dirty) && this.mode=='new'" type="button" class="btn btn-primary" (click)="saveProduct('Ok click')">Save</button>
+        <button *ngIf="!(formGroup.valid && formGroup.dirty) && this.mode=='new'" disabled type="button" class="btn btn-primary" (click)="saveProduct('Ok click')">Save</button>
       </div>
     </div>
   </ng-template>

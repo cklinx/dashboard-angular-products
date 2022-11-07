@@ -19,6 +19,7 @@ export class CategoriesComponent implements OnInit {
   public salesChart;
   public clicked: boolean = true;
   public clicked1: boolean = false;
+  public isLoading: boolean = true;
 
   constructor(private httpService: HttpService) { }
 
@@ -30,12 +31,13 @@ export class CategoriesComponent implements OnInit {
   }
 
   getStatCategories(): void {
+    this.isLoading = true;
     this.httpService.getStatCategories()
     .pipe(
       tap((res) => console.log('result Categories', res))
     ).subscribe((categories: StatsCategories[]) => {
+      this.isLoading = false;
       this.categories = categories;
-      // this.polarChart.update();
       var polarChart = document.getElementById('polar-chart');
       this.polarChart = new Chart(polarChart, this.getConfig(categories))
     });

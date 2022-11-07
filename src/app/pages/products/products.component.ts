@@ -46,7 +46,6 @@ export class ProductsComponent implements OnInit {
     .pipe(
       tap((res) => console.log('result Products', res))
     ).subscribe((products: WrapperDataList<WrapperData<Product>>) => {
-      // this.products = products.list;
       this.products = this.products.concat(products.list);
       this.totProducts = products.length;   
       this.isLoading = false;
@@ -68,10 +67,10 @@ export class ProductsComponent implements OnInit {
         this.mode = ModeDialog.New;
         break;
       case ModeDialog.View:
-          this.mode = ModeDialog.View;
-          break;
+        this.mode = ModeDialog.View;
+        break;
       default:
-        // code block
+        this.mode = ModeDialog.View;
     } 
 
     this.modalReference = this.modalService.open(content);
@@ -79,15 +78,14 @@ export class ProductsComponent implements OnInit {
     //only for edit and delete
     if(!isNil(selectedProduct)){
       this.selectedProduct = selectedProduct;
-      
     }
 	}
 
   deleteProduct(content: any, product: WrapperData<Product>): void{
     this.httpService.deleteProduct(product.id)
-    .pipe(
-      tap((res) => console.log('result delete Products', res))
-    )
+    // .pipe(
+    //   tap((res) => console.log('result delete Products', res))
+    // )
     .subscribe({
       next: data => {
         this.modalReference.close();
@@ -98,7 +96,7 @@ export class ProductsComponent implements OnInit {
         this.totProducts--;
       },
       error: error => {
-        console.error('There was an error!', error);
+        // console.error('There was an error!', error);
         this.modalReference.close();
         this.showToast(EventTypes.Error);
       }
@@ -116,9 +114,9 @@ export class ProductsComponent implements OnInit {
     }
 
     this.httpService.setProduct(productData)
-    .pipe(
-      tap((res) => console.log('result set Products', res))
-    )
+    // .pipe(
+    //   tap((res) => console.log('result set Products', res))
+    // )
     .subscribe({
       next: (data: string) => {
         this.modalReference.close();

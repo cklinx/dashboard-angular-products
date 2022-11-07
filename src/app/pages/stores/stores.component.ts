@@ -10,8 +10,9 @@ import HttpService from 'src/app/services/user-service/user-service';
 })
 export class StoresComponent implements OnInit {
   
-  stores: WrapperData<Store>[] = [];
-  
+  public stores: WrapperData<Store>[] = [];
+  public isLoading: boolean = true;
+
   constructor(private httpService: HttpService) { }
 
   ngOnInit() {    
@@ -19,10 +20,14 @@ export class StoresComponent implements OnInit {
   }
 
   getStores(): void {
+    this.isLoading = true;
     this.httpService.getStores()
     .pipe(
       // tap((res) => console.log('result Stores', res))
-    ).subscribe((stores: WrapperData<Store>[]) => (this.stores = stores));
+    ).subscribe((stores: WrapperData<Store>[]) => {
+      this.isLoading = false;
+      this.stores = stores;
+    });
   }
 
 }

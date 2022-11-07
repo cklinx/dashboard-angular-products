@@ -35,13 +35,7 @@
               </div>
             </div>
           </div>
-          <!-- <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-            <div class="d-flex justify-content-between">
-              <a href="javascript:void(0)" class="btn btn-sm btn-info mr-4">Connect</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">Message</a>
-            </div>
-          </div> -->
-          <div class="card-body ">
+          <div class="card-body" *ngIf="product">
             <div class="row pt-5">
               <div class="col">
                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
@@ -53,10 +47,6 @@
                     <span class="heading">{{product.data.reviews ?  product.data.reviews.length : 0}}</span>
                     <span class="description">Reviews</span>
                   </div>
-                  <!-- <div>
-                    <span class="heading">89</span>
-                    <span class="description">Comments</span>
-                  </div> -->
                 </div>
               </div>
             </div>
@@ -153,7 +143,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
-        <!-- <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button> -->
         <button *ngIf="this.mode=='new'" type="button" class="btn btn-primary" (click)="saveProduct('Ok click')">Save</button>
       </div>
     </div>

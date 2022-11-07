@@ -1,4 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HttpErrorHandler } from 'src/app/services/http-error-handler.service';
+import { MessageService } from 'src/app/services/message.service';
+import HttpService from 'src/app/services/user-service/user-service';
 import { ProductsComponent } from './products.component';
 
 
@@ -6,9 +10,16 @@ describe('ProductsComponent', () => {
   let component: ProductsComponent;
   let fixture: ComponentFixture<ProductsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProductsComponent ]
+      declarations: [ ProductsComponent ],
+      providers: [
+        HttpService,
+        HttpClient,
+        HttpHandler,
+        HttpErrorHandler,
+        MessageService
+      ]
     })
     .compileComponents();
   }));
