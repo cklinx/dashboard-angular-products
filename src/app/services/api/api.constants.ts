@@ -1,4 +1,4 @@
-const apiUrl = 'http://us-central1-test-b7665.cloudfunctions.net/api';
+const apiUrl = 'https://us-central1-test-b7665.cloudfunctions.net/api';
 const idStore = 'ijpxNJLM732vm8AeajMR';
 
 export const ApiUrls = {
