@@ -33,8 +33,6 @@ export class ProductsComponentAdapter {
         let invalidFileds: string[] = [];
         if (!form.valid) {
             for (let i in form.controls) {
-            
-                console.log('validateFormvalidateForm', i);
                 if(!form.controls[i].valid){
                     invalidFileds.push(i)
                 }

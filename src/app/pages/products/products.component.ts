@@ -43,9 +43,10 @@ export class ProductsComponent implements OnInit {
   getProductsPaged(): void {
     this.isLoading = true;
     this.httpService.getProductsPaged(this.pageResult)
-    .pipe(
-      tap((res) => console.log('result Products', res))
-    ).subscribe((products: WrapperDataList<WrapperData<Product>>) => {
+    // .pipe(
+    //   tap((res) => console.log('result Products', res))
+    // )
+    .subscribe((products: WrapperDataList<WrapperData<Product>>) => {
       this.products = this.products.concat(products.list);
       this.totProducts = products.length;   
       this.isLoading = false;
@@ -159,7 +160,7 @@ export class ProductsComponent implements OnInit {
   }
   
   onScrollDown() {
-    console.log('scrolled down!!', this.products.length, this.totProducts);
+    // console.log('scrolled down!!', this.products.length, this.totProducts);
     if(this.products.length<this.totProducts){
       this.pageResult++;
       this.getProductsPaged()
@@ -167,7 +168,7 @@ export class ProductsComponent implements OnInit {
   }
 
   onScrollUp() {
-    console.log('scrolled up!!');
+    // console.log('scrolled up!!');
   }
 
   addReview(review: string){
@@ -175,7 +176,6 @@ export class ProductsComponent implements OnInit {
       const reviews = this.formGroup.controls.reviews.value;
       reviews.push(review);
       this.formGroup.controls.reviews.setValue(reviews);
-      console.log('addReview', review, reviews, this.formGroup.controls.reviews.value);
     }
    
   }

@@ -38,10 +38,10 @@ export class ProductsViewComponent implements OnInit {
   getProductsPaged(): void {
     this.isLoading = true;
     this.httpService.getProductsPaged(this.pageResult)
-    .pipe(
-      tap((res) => console.log('result Products', res))
-    ).subscribe((products: WrapperDataList<WrapperData<Product>>) => {
-      // this.products = products.list;
+    // .pipe(
+    //   tap((res) => console.log('result Products', res))
+    // )
+    .subscribe((products: WrapperDataList<WrapperData<Product>>) => {
       this.products = this.products.concat(products.list);
       this.totProducts = products.length;   
       this.isLoading = false;
@@ -49,7 +49,7 @@ export class ProductsViewComponent implements OnInit {
   }
 
   onScrollDown() {
-    console.log('scrolled down!!', this.products.length, this.totProducts);
+    // console.log('scrolled down!!', this.products.length, this.totProducts);
     if(this.products.length<this.totProducts){
       this.pageResult++;
       this.getProductsPaged()
@@ -57,12 +57,10 @@ export class ProductsViewComponent implements OnInit {
   }
 
   onScrollUp() {
-    console.log('scrolled up!!');
+    // console.log('scrolled up!!');
   }
 
-  swithBreakpoint(){
-    console.log('swithBreakpointswithBreakpoint', this.isGridLayout);
-    
+  swithBreakpoint(){  
     this.isGridLayout = !this.isGridLayout;
   }
 

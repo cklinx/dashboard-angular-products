@@ -33,9 +33,10 @@ export class CategoriesComponent implements OnInit {
   getStatCategories(): void {
     this.isLoading = true;
     this.httpService.getStatCategories()
-    .pipe(
-      tap((res) => console.log('result Categories', res))
-    ).subscribe((categories: StatsCategories[]) => {
+    // .pipe(
+    //   tap((res) => console.log('result Categories', res))
+    // )
+    .subscribe((categories: StatsCategories[]) => {
       this.isLoading = false;
       this.categories = categories;
       var polarChart = document.getElementById('polar-chart');

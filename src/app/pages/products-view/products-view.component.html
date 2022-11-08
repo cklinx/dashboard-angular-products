@@ -24,52 +24,62 @@
     [scrollWindow]="true"
   >
     <div class="row mb-5 ">
-      <div class="order-xl-2 mb-5" [ngClass]="{'col-xl-4 col-md-6': isGridLayout, 'col-12': !isGridLayout}" *ngFor="let product of products; let i = index;">
-        <div class="card card-profile shadow">
-          <div class="row justify-content-center">
-            <div class="col-lg-3 order-lg-2">
-              <div class="card-profile-image">
-                <a href="javascript:void(0)">
-                  <img src="assets/img/theme/angular.jpg" class="rounded-circle">
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body" *ngIf="product">
-            <div class="row pt-5">
-              <div class="col">
-                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                  <div class="pt-5 pt-md-0">
-                    <span class="heading">{{product.data.price}} €</span>
-                    <span class="description">Price</span>
-                  </div>
-                  <div class="pt-5 pt-md-0">
-                    <span class="heading">{{product.data.reviews ?  product.data.reviews.length : 0}}</span>
-                    <span class="description">Reviews</span>
-                  </div>
+      <ng-template [ngIf]="products.length>0">
+        <div class="order-xl-2 mb-5" [ngClass]="{'col-xl-4 col-md-6': isGridLayout, 'col-12': !isGridLayout}" *ngFor="let product of products; let i = index;">
+          <div class="card card-profile shadow">
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2">
+                <div class="card-profile-image">
+                  <a href="javascript:void(0)">
+                    <img src="assets/img/theme/angular.jpg" class="rounded-circle">
+                  </a>
                 </div>
               </div>
             </div>
-            <div class="text-center">
-              <h1>
-                {{isGridLayout ? (product.data.title | slice:0:15) : product.data.title}}
-              </h1>
-              <div class="h5 font-weight-300">
-                <i class="ni location_pin mr-2"></i>{{isGridLayout ? (product.data.category | slice:0:15) : product.data.category}}
+            <div class="card-body" *ngIf="product">
+              <div class="row pt-5">
+                <div class="col">
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                    <div class="pt-5 pt-md-0">
+                      <span class="heading">{{product.data.price}} €</span>
+                      <span class="description">Price</span>
+                    </div>
+                    <div class="pt-5 pt-md-0">
+                      <span class="heading">{{product.data.reviews ?  product.data.reviews.length : 0}}</span>
+                      <span class="description">Reviews</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="h5 mt-4">
-                <i class="ni business_briefcase-24 mr-2"></i>Employee
+              <div class="text-center">
+                <h1>
+                  {{isGridLayout ? (product.data.title | slice:0:15) : product.data.title}}
+                </h1>
+                <div class="h5 font-weight-300">
+                  <i class="ni location_pin mr-2"></i>{{isGridLayout ? (product.data.category | slice:0:15) : product.data.category}}
+                </div>
+                <div class="h5 mt-4">
+                  <i class="ni business_briefcase-24 mr-2"></i>Employee
+                </div>
+                <div>
+                  <i class="ni education_hat mr-2"></i>{{isGridLayout ? (product.data.employee | slice:0:15) : product.data.employee}}&nbsp;
+                </div>
+                <hr class="my-4" />
+                <p>{{isGridLayout ? (product.data.description | slice:0:15) : product.data.description}}&nbsp;</p>
+                <a href="javascript:void(0)" (click)="open(content, 'view', product)">Show more reviews</a>
               </div>
-              <div>
-                <i class="ni education_hat mr-2"></i>{{isGridLayout ? (product.data.employee | slice:0:15) : product.data.employee}}&nbsp;
-              </div>
-              <hr class="my-4" />
-              <p>{{isGridLayout ? (product.data.description | slice:0:15) : product.data.description}}&nbsp;</p>
-              <a href="javascript:void(0)" (click)="open(content, 'view', product)">Show more reviews</a>
             </div>
           </div>
         </div>
-      </div>
+      </ng-template>
+
+      <ng-template [ngIf]="products.length<=0 && !isLoading">
+        <div class="row mt--4">
+          <div class="col-12 ml-4">
+            <h3 class="display-4 text-white">No results found</h3>
+          </div>
+        </div>
+      </ng-template>
       
     </div>
   </div>
