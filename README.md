@@ -1,17 +1,6 @@
 # dashboard-angular-products
  
 
-<!-- <table style="margin-left:auto;margin-right:auto; width">
- <tr>
-    <td><p style="font-size:30px">Products</p></td>
- </tr>
- <tr>
-    <td>
-        <img style="max-width: 480px;" src="./src/assets/img/resources/categories.gif" />
-    </td>
- </tr>
-</table> -->
-
 <div style="display: flex; flex-direction: row; flex-wrap: wrap">
     <div style="padding: 10px;">
         <h2>Categories</h2>

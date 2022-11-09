@@ -74,7 +74,7 @@ export class ProductsComponent implements OnInit {
         this.mode = ModeDialog.View;
     } 
 
-    this.modalReference = this.modalService.open(content);
+    this.modalReference = this.modalService.open(content, {size: 'lg'});
 
     //only for edit and delete
     if(!isNil(selectedProduct)){
